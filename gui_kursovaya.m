@@ -22,7 +22,7 @@ function varargout = gui_kursovaya(varargin)
 
 % Edit the above text to modify the response to help gui_kursovaya
 
-% Last Modified by GUIDE v2.5 09-May-2015 17:00:44
+% Last Modified by GUIDE v2.5 16-May-2015 19:33:29
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -92,9 +92,9 @@ global signal2
 signal2=strcat(pathfile,openfile);
 
 
-% --- Executes on button press in pushbutton6.
-function pushbutton6_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton6 (see GCBO)
+% --- Executes on button press in pushbutton8.
+function pushbutton8_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton8 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 global signal1
@@ -123,13 +123,22 @@ pks=pks';
 d=[locs2; pks];
 rnames = {'X','Y'};
 set(handles.uitable2,'data', d, 'RowName', rnames);
-axes(handles.axes2); stem(locs2,pks); xlim([0 50]);
+axes(handles.axes2); stem(locs2,pks); xlim([0 50]); grid;
 title('Резонансные частоты');
 xlabel('Частота дискретизации');
 ylabel('Амплитуда');
 
+% --- Executes on button press in pushbutton6.
+function pushbutton6_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton6 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
 global signal2
 mod2=xlsread(signal2);
+Fs=str2double(get(handles.edit2,'String'));
+ls=length(mod2);
+dF=Fs/ls;
+f1=0:dF:Fs/2-1/ls;
 y2=fft(mod2);
 N2=max(y2);
 a2=abs(y2)/N2;
